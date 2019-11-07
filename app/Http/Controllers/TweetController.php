@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Twitter;
+use App\Tweet;
 use Illuminate\Http\Request;
 
-class TwitterController extends Controller
+class TweetController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class TwitterController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Twitter  $twitter
+     * @param  \App\Tweet  $tweet
      * @return \Illuminate\Http\Response
      */
-    public function show(Twitter $twitter)
+    public function show(Tweet $tweet)
     {
         //
     }
@@ -52,10 +52,10 @@ class TwitterController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Twitter  $twitter
+     * @param  \App\Tweet  $tweet
      * @return \Illuminate\Http\Response
      */
-    public function edit(Twitter $twitter)
+    public function edit(Tweet $tweet)
     {
         //
     }
@@ -64,10 +64,10 @@ class TwitterController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Twitter  $twitter
+     * @param  \App\Tweet  $tweet
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Twitter $twitter)
+    public function update(Request $request, Tweet $tweet)
     {
         //
     }
@@ -75,10 +75,10 @@ class TwitterController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Twitter  $twitter
+     * @param  \App\Tweet  $tweet
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Twitter $twitter)
+    public function destroy(Tweet $tweet)
     {
         //
     }

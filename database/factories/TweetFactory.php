@@ -2,10 +2,10 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Twitter;
+use App\Tweet;
 use Faker\Generator as Faker;
 
-$factory->define(Twitter::class, function (Faker $faker) {
+$factory->define(Tweet::class, function (Faker $faker) {
     return [
         //
     ];
