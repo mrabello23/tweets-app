@@ -20,4 +20,6 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/tweets/hashtag/{hashtag}', 'TweetController@getTweetByHashtag');
+Route::get('/v1/tweets/hashtag/{hashtag}', 'TweetController@getTweetByHashtag');
+Route::get('/v1/tweets/batch-save', 'TweetController@batchSaveTweets');
+Route::get('/v1/tweets', 'TweetController@index');

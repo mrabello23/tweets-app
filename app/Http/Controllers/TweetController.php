@@ -14,7 +14,7 @@ class TweetController extends Controller
      */
     public function index()
     {
-        //
+        return Tweet::all();
     }
 
     /**
@@ -85,26 +85,69 @@ class TweetController extends Controller
 
     public function getTweetByHashtag($hashtag)
     {
+        $time_start = microtime(true);
+
         if (!$hashtag) {
             return response()->json([
                 'success' => false,
-                'message' => 'Bad Request'
+                'message' => 'Bad Request: invalid hashtag'
             ], 400);
         }
 
         try {
-            $tweet = new Tweet;
-            $tweets = $tweet->getTweetsByHashtag($hashtag);
-            Tweet::create($tweet->formatDataToSave($tweets));
+            $data = Tweet::getTweetsByHashtag($hashtag);
+            $time_end = microtime(true);
 
             return response()->json([
                 'success' => true,
-                'message' => 'Data successfully saved'
+                'message' => 'Success!',
+                'time_start' => $time_start,
+                'time_end' => $time_end,
+                'execution_time' => number_format($time_end - $time_start, 2) . ' segundos',
+                'data' => $data
             ]);
         } catch (\Exception $ex) {
             return response()->json([
                 'success' => false,
                 'message' => $ex->getMessage()
+            ], 500);
+        }
+    }
+
+    public function batchSaveTweets()
+    {
+        $time_start = microtime(true);
+
+        $hashtags = [
+            'openbanking',
+            'apifirst',
+            'devops',
+            'cloudfirst',
+            'microservices',
+            'apigateway',
+            'oauth',
+            'swagger',
+            'raml',
+            'openapis',
+        ];
+
+        try {
+            $tweet = new Tweet;
+            $tweet->batchSaveTweetsByHashtag($hashtags);
+            $time_end = microtime(true);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Success!',
+                'time_start' => $time_start,
+                'time_end' => $time_end,
+                'execution_time' => number_format($time_end - $time_start, 2) . ' segundos',
+            ]);
+        } catch (\Exception $ex) {
+            return response()->json([
+                'success' => false,
+                'message' => $ex->getMessage(),
+                'Trace' => $ex->getTraceAsString()
             ], 500);
         }
     }
