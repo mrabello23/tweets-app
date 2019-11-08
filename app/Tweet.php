@@ -17,16 +17,14 @@ class Tweet extends Model
         'usuario_apelido'
     ];
 
-    public function getTweetsByHashtag($hashtag)
+    public static function getTweetsByHashtag($hashtag)
     {
         $hashtag = strpos('#', $hashtag) ? str_replace('#', '%23', $hashtag) : '%23' . $hashtag;
-
-        $bearer = 'AAAAAAAAAAAAAAAAAAAAADo7AwEAAAAA0B7B9GkQVdstJa0Tta2Azyjod5U%3DaAJGFMLm0813onn5GURY4HECHVL88TJodrMgZaUq4fBj4AeGKM';
         $url = 'https://api.twitter.com/1.1/search/tweets.json?count=100&q=' . $hashtag;
 
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Authorization: Bearer ' . $bearer]);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Authorization: Bearer ' . env('TWITTER_BEARER_TOKEN')]);
 
         $response = curl_exec($ch);
         curl_close($ch);
@@ -44,7 +42,7 @@ class Tweet extends Model
 
         return array_map(function ($tweets) use ($hashtag) {
             return [
-                'tweet_data' => $tweets['created_at'],
+                'tweet_data' => date('Y-m-d H:i:s', strtotime($tweets['created_at'])),
                 'tweet' => $tweets['text'],
                 'lingua' => $tweets['lang'],
                 'usuario_nome' => $tweets['user']['name'],
@@ -54,5 +52,24 @@ class Tweet extends Model
                 'hashtag' => $hashtag
             ];
         }, $data['statuses']);
+    }
+
+    public function batchSaveTweetsByHashtag(array $hashtags)
+    {
+        foreach ($hashtags as $hashtag) {
+            $tweets = Tweet::getTweetsByHashtag($hashtag);
+            $dataToSave = $this->formatDataToSave($tweets);
+
+            array_walk($dataToSave, function ($tweet) {
+                Tweet::updateOrCreate(
+                    [
+                        'tweet_data' => $tweet['tweet_data'],
+                        'usuario_apelido' => $tweet['usuario_apelido'],
+                        'hashtag' => $tweet['hashtag']
+                    ],
+                    $tweet
+                );
+            });
+        }
     }
 }

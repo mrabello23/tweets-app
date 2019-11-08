@@ -22,7 +22,14 @@ services:
     ports:
       - "8080:80"
     dns: 8.8.8.8
-    command: bash -c "chmod -R 777 /var/www/html && composer install && cp .env.example .env && php artisan key:generate && php artisan migrate && service apache2 restart && tail -f /dev/null"
+    command: bash -c "chmod -R 777 /var/www/html && 
+      cd /var/www/html && 
+      cp .env.example .env && 
+      composer install && 
+      php artisan key:generate && 
+      php artisan migrate && 
+      service apache2 restart && 
+      tail -f /dev/null"
     links:
       - db
     depends_on:
