@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Tweet extends Model
 {
@@ -71,5 +72,45 @@ class Tweet extends Model
                 );
             });
         }
+    }
+
+    public static function getTop5UsersByFollowers()
+    {
+        return DB::select('
+            SELECT 
+                usuario_nome,
+                usuario_apelido,
+                seguidores 
+            FROM tweets 
+            ORDER BY seguidores DESC 
+            LIMIT 5
+        ');
+    }
+
+    public static function getTotalPostsByHour()
+    {
+        return DB::select('
+            SELECT 
+                HOUR(tweet_data) as hora_tweet,
+                count(1) as total_posts
+            FROM tweets 
+            GROUP BY HOUR(tweet_data)
+        ');
+    }
+
+    public static function getTotalPostsByHashtagLangLocal()
+    {
+        return DB::select('
+            SELECT 
+                hashtag, 
+                lingua, 
+                localidade, 
+                count(1) as total_posts
+            FROM tweets 
+            GROUP BY 
+                hashtag, 
+                lingua, 
+                localidade
+        ');
     }
 }
