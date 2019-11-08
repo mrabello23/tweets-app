@@ -82,4 +82,30 @@ class TweetController extends Controller
     {
         //
     }
+
+    public function getTweetByHashtag($hashtag)
+    {
+        if (!$hashtag) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Bad Request'
+            ], 400);
+        }
+
+        try {
+            $tweet = new Tweet;
+            $tweets = $tweet->getTweetsByHashtag($hashtag);
+            Tweet::create($tweet->formatDataToSave($tweets));
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Data successfully saved'
+            ]);
+        } catch (\Exception $ex) {
+            return response()->json([
+                'success' => false,
+                'message' => $ex->getMessage()
+            ], 500);
+        }
+    }
 }

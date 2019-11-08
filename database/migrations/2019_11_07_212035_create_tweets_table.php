@@ -15,13 +15,14 @@ class CreateTweetsTable extends Migration
     {
         Schema::create('tweets', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('tweet', 200);
+            $table->text('tweet');
             $table->dateTime('tweet_data');
             $table->string('hashtag', 100);
-            $table->string('seguidores', 100);
-            $table->string('localidade', 255);
-            $table->string('usuario_nome', 255);
-            $table->string('usuario_apelido', 100);
+            $table->unsignedInteger('seguidores');
+            $table->string('localidade', 150);
+            $table->string('lingua', 15);
+            $table->string('usuario_nome', 150);
+            $table->string('usuario_apelido', 150);
             $table->timestamps();
         });
     }
