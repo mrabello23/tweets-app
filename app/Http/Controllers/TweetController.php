@@ -17,72 +17,6 @@ class TweetController extends Controller
         return Tweet::all();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Tweet  $tweet
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Tweet $tweet)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Tweet  $tweet
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Tweet $tweet)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Tweet  $tweet
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Tweet $tweet)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Tweet  $tweet
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Tweet $tweet)
-    {
-        //
-    }
-
     public function getTweetByHashtag($hashtag)
     {
         $time_start = microtime(true);
@@ -103,7 +37,8 @@ class TweetController extends Controller
                 'message' => 'Success!',
                 'time_start' => $time_start,
                 'time_end' => $time_end,
-                'execution_time' => number_format($time_end - $time_start, 2) . ' segundos',
+                'execution_time' => number_format($time_end - $time_start, 2) . ' segundos', 'total' => count($data),
+                'total' => count($data),
                 'data' => $data
             ]);
         } catch (\Exception $ex) {
@@ -146,8 +81,82 @@ class TweetController extends Controller
         } catch (\Exception $ex) {
             return response()->json([
                 'success' => false,
-                'message' => $ex->getMessage(),
-                'Trace' => $ex->getTraceAsString()
+                'message' => $ex->getMessage()
+            ], 500);
+        }
+    }
+
+    public function getTop5UsersByFollowers()
+    {
+        $time_start = microtime(true);
+
+        try {
+            $data = Tweet::getTop5UsersByFollowers();
+            $time_end = microtime(true);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Success!',
+                'time_start' => $time_start,
+                'time_end' => $time_end,
+                'execution_time' => number_format($time_end - $time_start, 2) . ' segundos',
+                'total' => count($data),
+                'data' => $data
+            ]);
+        } catch (\Exception $ex) {
+            return response()->json([
+                'success' => false,
+                'message' => $ex->getMessage()
+            ], 500);
+        }
+    }
+
+    public function getTotalPostsByHour()
+    {
+        $time_start = microtime(true);
+
+        try {
+            $data = Tweet::getTotalPostsByHour();
+            $time_end = microtime(true);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Success!',
+                'time_start' => $time_start,
+                'time_end' => $time_end,
+                'execution_time' => number_format($time_end - $time_start, 2) . ' segundos',
+                'total' => count($data),
+                'data' => $data
+            ]);
+        } catch (\Exception $ex) {
+            return response()->json([
+                'success' => false,
+                'message' => $ex->getMessage()
+            ], 500);
+        }
+    }
+
+    public function getTotalPostsByHashtagLangLocal()
+    {
+        $time_start = microtime(true);
+
+        try {
+            $data = Tweet::getTotalPostsByHashtagLangLocal();
+            $time_end = microtime(true);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Success!',
+                'time_start' => $time_start,
+                'time_end' => $time_end,
+                'execution_time' => number_format($time_end - $time_start, 2) . ' segundos',
+                'total' => count($data),
+                'data' => $data
+            ]);
+        } catch (\Exception $ex) {
+            return response()->json([
+                'success' => false,
+                'message' => $ex->getMessage()
             ], 500);
         }
     }
