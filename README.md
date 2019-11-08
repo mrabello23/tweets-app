@@ -1,6 +1,5 @@
 ## Tweets App
 
-Main functionlities:
 - Find tweets by Hashtag
 - List user with most followers
 - List total tweets by hour
@@ -10,7 +9,7 @@ Main functionlities:
 - Docker installed
 
 ## Run project
-- 
+- Run "docker-compose up -d"
 
 ## Laravel Sponsors
 
@@ -46,13 +45,6 @@ We would like to extend our thanks to the following sponsors for funding Laravel
 - [Appoly](https://www.appoly.co.uk)
 - [OP.GG](https://op.gg)
 
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
 ## License
 
