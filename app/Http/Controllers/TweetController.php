@@ -23,11 +23,11 @@ class TweetController extends Controller
         ]);
     }
 
-    public function getTweetByHashtag($hashtag)
+    public function getTweetByHashtag($hashtag = false)
     {
         $time_start = microtime(true);
 
-        if (!$hashtag) {
+        if (!$hashtag || strlen($hashtag) < 2) {
             return response()->json([
                 'success' => false,
                 'message' => 'Bad Request: invalid hashtag'
