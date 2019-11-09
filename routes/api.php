@@ -9,10 +9,6 @@ use Illuminate\Http\Request;
 |
 */
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-
 Route::get('/', function () {
     return response()->json([
         'success' => true,
@@ -20,9 +16,14 @@ Route::get('/', function () {
     ]);
 });
 
+# Get Tweets by Hashtag
 Route::get('/v1/tweets/hashtag/{hashtag}', 'TweetController@getTweetByHashtag');
+
+# Transform and Save data to analyze
 Route::get('/v1/tweets/batch-save', 'TweetController@batchSaveTweets');
-Route::get('/v1/tweets', 'TweetController@index');
-Route::get('/v1/total/hour', 'TweetController@getTotalPostsByHour');
-Route::get('/v1/total/hashtag/lang/local', 'TweetController@getTotalPostsByHashtagLangLocal');
-Route::get('/v1/top/users', 'TweetController@getTop5UsersByFollowers');
+
+# Rest API
+Route::get('/v1/tweets', 'TweetController@index')->name('api.index');
+Route::get('/v1/total/hour', 'TweetController@getTotalPostsByHour')->name('api.total.hour');
+Route::get('/v1/total/hashtag/lang/local', 'TweetController@getTotalPostsByHashtagLangLocal')->name('api.total.tag.lang.local');
+Route::get('/v1/top/users', 'TweetController@getTop5UsersByFollowers')->name('api.top.users');

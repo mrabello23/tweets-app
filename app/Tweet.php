@@ -80,7 +80,9 @@ class Tweet extends Model
             SELECT 
                 usuario_nome,
                 usuario_apelido,
-                seguidores 
+                seguidores,
+                lingua,
+                localidade
             FROM tweets 
             ORDER BY seguidores DESC 
             LIMIT 5
@@ -100,17 +102,9 @@ class Tweet extends Model
 
     public static function getTotalPostsByHashtagLangLocal()
     {
-        return DB::select('
-            SELECT 
-                hashtag, 
-                lingua, 
-                localidade, 
-                count(1) as total_posts
-            FROM tweets 
-            GROUP BY 
-                hashtag, 
-                lingua, 
-                localidade
-        ');
+        return DB::table('tweets')
+            ->select(DB::raw('hashtag, lingua, localidade, count(1) as total_posts'))
+            ->groupBy(DB::raw('hashtag, lingua, localidade'))
+            ->orderBy('total_posts', 'desc');
     }
 }
