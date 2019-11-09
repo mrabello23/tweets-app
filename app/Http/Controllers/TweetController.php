@@ -7,14 +7,20 @@ use Illuminate\Http\Request;
 
 class TweetController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        return Tweet::all();
+        $time_start = microtime(true);
+        $data = Tweet::all();
+        $time_end = microtime(true);
+
+        return response()->json([
+            'success' => true,
+            'request_time_start' => $time_start,
+            'request_time_end' => $time_end,
+            'api_response_time' => number_format($time_end - $time_start, 2) . ' segundos',
+            'total' => count($data),
+            'data' => $data
+        ]);
     }
 
     public function getTweetByHashtag($hashtag)
@@ -34,10 +40,9 @@ class TweetController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'Success!',
-                'time_start' => $time_start,
-                'time_end' => $time_end,
-                'execution_time' => number_format($time_end - $time_start, 2) . ' segundos', 'total' => count($data),
+                'request_time_start' => $time_start,
+                'request_time_end' => $time_end,
+                'api_response_time' => number_format($time_end - $time_start, 2) . ' segundos',
                 'total' => count($data),
                 'data' => $data
             ]);
@@ -73,10 +78,9 @@ class TweetController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'Success!',
-                'time_start' => $time_start,
-                'time_end' => $time_end,
-                'execution_time' => number_format($time_end - $time_start, 2) . ' segundos',
+                'request_time_start' => $time_start,
+                'request_time_end' => $time_end,
+                'api_response_time' => number_format($time_end - $time_start, 2) . ' segundos',
             ]);
         } catch (\Exception $ex) {
             return response()->json([
@@ -96,10 +100,9 @@ class TweetController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'Success!',
-                'time_start' => $time_start,
-                'time_end' => $time_end,
-                'execution_time' => number_format($time_end - $time_start, 2) . ' segundos',
+                'request_time_start' => $time_start,
+                'request_time_end' => $time_end,
+                'api_response_time' => number_format($time_end - $time_start, 2) . ' segundos',
                 'total' => count($data),
                 'data' => $data
             ]);
@@ -121,10 +124,9 @@ class TweetController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'Success!',
-                'time_start' => $time_start,
-                'time_end' => $time_end,
-                'execution_time' => number_format($time_end - $time_start, 2) . ' segundos',
+                'request_time_start' => $time_start,
+                'request_time_end' => $time_end,
+                'api_response_time' => number_format($time_end - $time_start, 2) . ' segundos',
                 'total' => count($data),
                 'data' => $data
             ]);
@@ -141,15 +143,14 @@ class TweetController extends Controller
         $time_start = microtime(true);
 
         try {
-            $data = Tweet::getTotalPostsByHashtagLangLocal();
+            $data = Tweet::getTotalPostsByHashtagLangLocal()->get()->toArray();
             $time_end = microtime(true);
 
             return response()->json([
                 'success' => true,
-                'message' => 'Success!',
-                'time_start' => $time_start,
-                'time_end' => $time_end,
-                'execution_time' => number_format($time_end - $time_start, 2) . ' segundos',
+                'request_time_start' => $time_start,
+                'request_time_end' => $time_end,
+                'api_response_time' => number_format($time_end - $time_start, 2) . ' segundos',
                 'total' => count($data),
                 'data' => $data
             ]);
