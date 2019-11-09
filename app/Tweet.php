@@ -18,8 +18,12 @@ class Tweet extends Model
         'usuario_apelido'
     ];
 
-    public static function getTweetsByHashtag($hashtag)
+    public static function getTweetsByHashtag($hashtag = false)
     {
+        if (!$hashtag) {
+            throw new \InvalidArgumentException('Invalid hashtag.');
+        }
+
         $hashtag = strpos('#', $hashtag) ? str_replace('#', '%23', $hashtag) : '%23' . $hashtag;
         $url = 'https://api.twitter.com/1.1/search/tweets.json?count=100&q=' . $hashtag;
 
@@ -39,6 +43,10 @@ class Tweet extends Model
 
     public function formatDataToSave(array $data)
     {
+        if (count($data) <= 0) {
+            throw new \InvalidArgumentException('Empty array.');
+        }
+
         $hashtag = str_replace('%23', '#', $data['search_metadata']['query']);
 
         return array_map(function ($tweets) use ($hashtag) {

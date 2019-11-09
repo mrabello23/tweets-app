@@ -17,7 +17,7 @@ Route::get('/', function () {
 });
 
 # Get Tweets by Hashtag
-Route::get('/v1/tweets/hashtag/{hashtag}', 'TweetController@getTweetByHashtag');
+Route::get('/v1/tweets/hashtag/{hashtag?}', 'TweetController@getTweetByHashtag');
 
 # Transform and Save data to analyze
 Route::get('/v1/tweets/batch-save', 'TweetController@batchSaveTweets');

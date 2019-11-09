@@ -9,7 +9,10 @@
 - Docker installed
 
 ## Run project
-- Run "docker-compose up -d"
+- Run "docker-compose up"
+
+## Run Unit and Feature Tests
+- docker exec -it webapp /var/www/html/vendor/bin/phpunit /var/www/html/tests
 
 ## Laravel Sponsors
 
