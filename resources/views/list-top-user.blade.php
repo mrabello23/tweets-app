@@ -35,7 +35,7 @@
 
 @section('js')
     <script>
-        sendRequest('GET', '/api/v1/top/users', true);
+        sendRequest('GET', '/api/v1/top/users', createTableBody);
 
         function createTableBody(json){
             let html = "";

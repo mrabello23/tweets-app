@@ -34,7 +34,7 @@
 
 @section('js')
     <script>
-        sendRequest('GET', '/api/v1/total/hashtag/lang/local', true);
+        sendRequest('GET', '/api/v1/total/hashtag/lang/local', createTableBody);
 
         function createTableBody(json){
             let html = "";

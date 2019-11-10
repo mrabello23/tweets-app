@@ -32,7 +32,7 @@
 
 @section('js')
     <script>
-        sendRequest('GET', '/api/v1/total/hour', true);
+        sendRequest('GET', '/api/v1/total/hour', createTableBody);
 
         function createTableBody(json){
             let html = "";
