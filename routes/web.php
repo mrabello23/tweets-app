@@ -19,13 +19,13 @@ Route::get('/tweets', function () {
 })->name('web.index');
 
 Route::get('/total/hour', function () {
-    return view('list-total-hour', ['tweets' => Tweet::getTotalPostsByHour()]);
+    return view('list-total-hour');
 })->name('web.total.hour');
 
 Route::get('/total/hashtag/lang/local', function () {
-    return view('list-total-hashtag-lang-local', ['tweets' => Tweet::getTotalPostsByHashtagLangLocal()->paginate(15)]);
+    return view('list-total-hashtag-lang-local');
 })->name('web.total.tag.lang.local');
 
 Route::get('/top/users', function () {
-    return view('list-top-user', ['tweets' => Tweet::getTop5UsersByFollowers()]);
+    return view('list-top-user');
 })->name('web.top.users');

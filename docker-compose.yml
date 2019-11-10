@@ -2,10 +2,10 @@ version: '3'
 services:
   db:
     container_name: webmysql
+    restart: always
     image: mysql:5.7
     ports:
       - "3306:3306"
-    restart: always
     command: --default-authentication-plugin=mysql_native_password
     environment:
       TZ: "America/Sao_Paulo"
@@ -16,7 +16,7 @@ services:
     restart: always
     build:
       context: .
-      dockerfile: docker/Dockerfile
+      dockerfile: docker/php-apache/Dockerfile
     volumes:
       - ./:/var/www/html
     ports:
@@ -34,3 +34,30 @@ services:
       - db
     depends_on:
       - db
+    environment:
+      - DATADOG_HOST=datadog
+  datadog:
+    container_name: datadog-agent
+    restart: always
+    build:
+      context: .
+      dockerfile: docker/datadog/Dockerfile
+    environment:
+      - DD_API_KEY=ca0debc37c552558e2dbf5d4b0fce92f
+      - DD_PROCESS_AGENT_ENABLED=true
+      - DD_TRACE_DEBUG=true
+      - DD_LOGS_ENABLED=true
+      - DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL=true
+      - DD_AC_EXCLUDE="name:datadog-agent"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /proc/:/host/proc/:ro
+      - /sys/fs/cgroup:/host/sys/fs/cgroup:ro
+      - /etc/passwd:/etc/passwd:ro
+      - ./storage/logs:/logs:ro
+    labels:
+      com.datadoghq.ad.logs: '[{"source": "php", "service": "webapp", "type": "file", "path": "/logs/app.log"}]'
+    links:
+      - web
+    depends_on:
+      - web

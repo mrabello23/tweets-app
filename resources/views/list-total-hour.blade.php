@@ -5,7 +5,7 @@
         <div class="container">
             <div class="row mb-5">
                 <div class="col-md-12">
-                    <h1 class="">Todos de Tweets por Hora</h1>
+                    <h1 class="">Total de Tweets por Hora</h1>
                 </div>
             </div>
 
@@ -19,13 +19,8 @@
                                     <th>Total Posts</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                @foreach ($tweets as $key => $tweet)
-                                    <tr>
-                                        <td>{{ str_pad($tweet->hora_tweet, 2, '0', STR_PAD_LEFT) }}</td>
-                                        <td>{{ $tweet->total_posts }}</td>
-                                    </tr>
-                                @endforeach
+                            <tbody id="tb1">
+                                <tr><td colspan="2">Aguarde..</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -33,4 +28,23 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('js')
+    <script>
+        sendRequest('GET', '/api/v1/total/hour', true);
+
+        function createTableBody(json){
+            let html = "";
+
+            for (const item in json.data) {
+                html += "<tr>";
+                    html += "<td>" + item.hora_tweet + "</td>";
+                    html += "<td>" + item.total_posts + "</td>";
+                html += "</tr>";
+            }
+
+            document.getElementById('tb1').innerHTML=html;
+        }
+    </script>
 @endsection

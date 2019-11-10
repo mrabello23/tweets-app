@@ -22,16 +22,8 @@
                                     <th>Lingua</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                @foreach ($tweets as $key => $tweet)
-                                    <tr>
-                                        <td>{{ $tweet->usuario_nome }}</td>
-                                        <td>{{ $tweet->usuario_apelido }}</td>
-                                        <td>{{ number_format($tweet->seguidores, 0, ',', '.') }}</td>
-                                        <td>{{ $tweet->localidade }}</td>
-                                        <td>{{ $tweet->lingua }}</td>
-                                    </tr>
-                                @endforeach
+                            <tbody id="tb2">
+                                <tr><td colspan="2">Aguarde..</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -39,4 +31,26 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('js')
+    <script>
+        sendRequest('GET', '/api/v1/top/users', true);
+
+        function createTableBody(json){
+            let html = "";
+
+            for (const item in json.data) {
+                html += "<tr>";
+                    html += "<td>" + item.usuario_nome + "</td>";
+                    html += "<td>" + item.usuario_apelido + "</td>";
+                    html += "<td>" + item.seguidores + "</td>";
+                    html += "<td>" + item.localidade + "</td>";
+                    html += "<td>" + item.lingua + "</td>";
+                html += "</tr>";
+            }
+
+            document.getElementById('tb2').innerHTML=html;
+        }
+    </script>
 @endsection

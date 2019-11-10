@@ -9,6 +9,7 @@
 - Docker installed
 
 ## Run project
+- Run "docker-compose build"
 - Run "docker-compose up"
 
 ## Run Unit and Feature Tests

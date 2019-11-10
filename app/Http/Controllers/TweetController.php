@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Tweet;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class TweetController extends Controller
 {
     public function index()
     {
+        Log::info('Acessou API - Todos os Tweets');
+
         $time_start = microtime(true);
         $data = Tweet::all();
         $time_end = microtime(true);
