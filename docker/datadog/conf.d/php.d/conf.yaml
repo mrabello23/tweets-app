@@ -13,7 +13,6 @@ logs:
     ##   tags: (optional) add tags to each logs collected
 
   - type: file
-    path: /var/www/html/storage/logs/*.log
-    service: php
+    path: /logs/*.log
+    service: webapp
     source: php
-    sourcecategory: sourcecode
