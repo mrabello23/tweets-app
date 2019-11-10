@@ -120,5 +120,23 @@
 
         @yield('content')
         @yield('js')
+        
+        <script>
+            function sendRequest(method, url, async) {
+                const request = new XMLHttpRequest();
+                
+                request.onreadystatechange = function() {
+                    if(request.readyState === 4) {
+                        if(request.status === 200) { 
+                            const json = JSON.parse(request.responseText);
+                            createTableBody(json);
+                        }
+                    }
+                }
+                
+                request.open(method, url, async);
+                request.send();
+            }
+        </script>
     </body>
 </html>

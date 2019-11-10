@@ -5,7 +5,7 @@
         <div class="container">
             <div class="row mb-5">
                 <div class="col-md-12">
-                    <h1 class="">Todos os Tweets</h1>
+                    <h1 class="">Total de Tweets por Hashtag, Lingua e Local</h1>
                 </div>
             </div>
 
@@ -21,26 +21,34 @@
                                     <th>Total Posts</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                @foreach ($tweets as $key => $tweet)
-                                    <tr>
-                                        <td>{{ $tweet->hashtag }}</td>
-                                        <td>{{ $tweet->localidade }}</td>
-                                        <td>{{ $tweet->lingua }}</td>
-                                        <td>{{ $tweet->total_posts }}</td>
-                                    </tr>
-                                @endforeach
+                            <tbody id="tb3">
+                                <tr><td colspan="2">Aguarde..</td></tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                    {{ $tweets->links() }}
-                </div>
-            </div>
         </div>
     </div>
+@endsection
+
+@section('js')
+    <script>
+        sendRequest('GET', '/api/v1/total/hashtag/lang/local', true);
+
+        function createTableBody(json){
+            let html = "";
+
+            for (const item in json.data) {
+                html += "<tr>";
+                    html += "<td>" + item.hashtag + "</td>";
+                    html += "<td>" + item.localidade + "</td>";
+                    html += "<td>" + item.lingua + "</td>";
+                    html += "<td>" + item.total_posts + "</td>";
+                html += "</tr>";
+            }
+
+            document.getElementById('tb3').innerHTML=html;
+        }
+    </script>
 @endsection
