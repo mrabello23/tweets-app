@@ -16,3 +16,7 @@
         </div>
     </div>
 @endsection
+
+@section('js')
+    <script>sendRequest('GET', '/api/v1/tweets/batch-save', true);</script>
+@endsection

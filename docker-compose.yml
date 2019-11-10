@@ -56,7 +56,7 @@ services:
       - /etc/passwd:/etc/passwd:ro
       - ./storage/logs:/logs:ro
     labels:
-      com.datadoghq.ad.logs: '[{"source": "php", "service": "webapp", "type": "file", "path": "/logs/app.log"}]'
+      com.datadoghq.ad.logs: '[{"source": "php", "service": "webapp", "type": "file", "path": "/logs/*.log"}]'
     links:
       - web
     depends_on:
