@@ -42,11 +42,11 @@
 
             for (const item in json.data) {
                 html += "<tr>";
-                    html += "<td>" + item.usuario_nome + "</td>";
-                    html += "<td>" + item.usuario_apelido + "</td>";
-                    html += "<td>" + item.seguidores + "</td>";
-                    html += "<td>" + item.localidade + "</td>";
-                    html += "<td>" + item.lingua + "</td>";
+                    html += "<td>" + json.data[item].usuario_nome + "</td>";
+                    html += "<td>" + json.data[item].usuario_apelido + "</td>";
+                    html += "<td>" + json.data[item].seguidores + "</td>";
+                    html += "<td>" + json.data[item].localidade + "</td>";
+                    html += "<td>" + json.data[item].lingua + "</td>";
                 html += "</tr>";
             }
 

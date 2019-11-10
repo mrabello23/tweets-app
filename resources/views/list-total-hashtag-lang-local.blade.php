@@ -41,10 +41,10 @@
 
             for (const item in json.data) {
                 html += "<tr>";
-                    html += "<td>" + item.hashtag + "</td>";
-                    html += "<td>" + item.localidade + "</td>";
-                    html += "<td>" + item.lingua + "</td>";
-                    html += "<td>" + item.total_posts + "</td>";
+                    html += "<td>" + json.data[item].hashtag + "</td>";
+                    html += "<td>" + json.data[item].localidade + "</td>";
+                    html += "<td>" + json.data[item].lingua + "</td>";
+                    html += "<td>" + json.data[item].total_posts + "</td>";
                 html += "</tr>";
             }
 

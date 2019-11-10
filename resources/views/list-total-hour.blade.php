@@ -39,8 +39,8 @@
 
             for (const item in json.data) {
                 html += "<tr>";
-                    html += "<td>" + item.hora_tweet + "</td>";
-                    html += "<td>" + item.total_posts + "</td>";
+                    html += "<td>" + json.data[item].hora_tweet + "</td>";
+                    html += "<td>" + json.data[item].total_posts + "</td>";
                 html += "</tr>";
             }
 

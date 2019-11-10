@@ -89,7 +89,7 @@
                             console.log(json);
 
                             if (_callback && typeof _callback === 'function') {
-                                callback(json);
+                                _callback(json);
                             }
                         }
                     }
