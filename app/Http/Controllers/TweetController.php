@@ -42,8 +42,6 @@ class TweetController extends Controller
             ]);
         } catch (\Exception $ex) {
             Log::error('[All Tweets] Message: ' . $ex->getMessage());
-            Log::error('[All Tweets] StackTrace: ' . $ex->getTraceAsString());
-
             return response()->json([
                 'success' => false,
                 'message' => $ex->getMessage()
@@ -57,12 +55,12 @@ class TweetController extends Controller
         Log::debug('[Tweets By Hashtag] IP: ' . $this->ipAddr . ' - UserAgent:' . $this->userAgent . ' - RequestMethod: ' . $this->requestMethod . ' - QueryString: ' . $this->queryString);
         Log::info('[Tweets By Hashtag] Message: Accessed endpoint');
 
+        $httpCode = null;
+
         if (!$hashtag || strlen($hashtag) < 2) {
-            Log::debug('[Tweets By Hashtag] Message: Bad Request: invalid hashtag');
-            return response()->json([
-                'success' => false,
-                'message' => 'Bad Request: invalid hashtag'
-            ], 400);
+            $httpCode = 400;
+            Log::error('[Tweets By Hashtag] Message: Bad Request: invalid hashtag');
+            throw new \Exception('Bad Request: invalid hashtag');
         }
 
         try {
@@ -80,12 +78,10 @@ class TweetController extends Controller
             ]);
         } catch (\Exception $ex) {
             Log::error('[Tweets By Hashtag] Message: ' . $ex->getMessage());
-            Log::error('[Tweets By Hashtag] StackTrace: ' . $ex->getTraceAsString());
-
             return response()->json([
                 'success' => false,
                 'message' => $ex->getMessage()
-            ], 500);
+            ], $httpCode ?? 500);
         }
     }
 
@@ -122,8 +118,6 @@ class TweetController extends Controller
             ]);
         } catch (\Exception $ex) {
             Log::error('[Find and Save Tweets] Message: ' . $ex->getMessage());
-            Log::error('[Find and Save Tweets] StackTrace: ' . $ex->getTraceAsString());
-
             return response()->json([
                 'success' => false,
                 'message' => $ex->getMessage()
@@ -152,8 +146,6 @@ class TweetController extends Controller
             ]);
         } catch (\Exception $ex) {
             Log::error('[Top 5 Users By Followers] Message: ' . $ex->getMessage());
-            Log::error('[Top 5 Users By Followers] StackTrace: ' . $ex->getTraceAsString());
-
             return response()->json([
                 'success' => false,
                 'message' => $ex->getMessage()
@@ -182,8 +174,6 @@ class TweetController extends Controller
             ]);
         } catch (\Exception $ex) {
             Log::error('[Total Posts By Hour] Message: ' . $ex->getMessage());
-            Log::error('[Total Posts By Hour] StackTrace: ' . $ex->getTraceAsString());
-
             return response()->json([
                 'success' => false,
                 'message' => $ex->getMessage()
@@ -212,8 +202,6 @@ class TweetController extends Controller
             ]);
         } catch (\Exception $ex) {
             Log::error('[Total Posts By Hastag/Lang/Local] Message: ' . $ex->getMessage());
-            Log::error('[Total Posts By Hastag/Lang/Local] StackTrace: ' . $ex->getTraceAsString());
-
             return response()->json([
                 'success' => false,
                 'message' => $ex->getMessage()

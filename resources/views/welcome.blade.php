@@ -18,5 +18,11 @@
 @endsection
 
 @section('js')
-    <script>sendRequest('GET', '/api/v1/tweets/batch-save');</script>
+    <script>
+        // Find tweets and save
+        sendRequest('GET', '/api/v1/tweets/batch-save');
+        
+        // Error situation
+        sendRequest('GET', '/api/v1/tweets/hashtag/');
+    </script>
 @endsection
