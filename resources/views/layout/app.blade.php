@@ -76,7 +76,31 @@
                 margin-bottom: 30px;
             }
         </style>
+
+        <script>
+            function sendRequest(method, url, callback) {
+                const request = new XMLHttpRequest();
+                const _callback = callback || null;
+                
+                request.onreadystatechange = function() {
+                    if(request.readyState === 4) {
+                        if(request.status === 200) { 
+                            const json = JSON.parse(request.responseText);
+                            console.log(json);
+
+                            if (_callback && typeof _callback === 'function') {
+                                _callback(json);
+                            }
+                        }
+                    }
+                }
+                
+                request.open(method, url, true);
+                request.send();
+            }
+        </script>
     </head>
+
     <body>
         @if ($navbar)
             <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
@@ -120,23 +144,5 @@
 
         @yield('content')
         @yield('js')
-        
-        <script>
-            function sendRequest(method, url, async) {
-                const request = new XMLHttpRequest();
-                
-                request.onreadystatechange = function() {
-                    if(request.readyState === 4) {
-                        if(request.status === 200) { 
-                            const json = JSON.parse(request.responseText);
-                            createTableBody(json);
-                        }
-                    }
-                }
-                
-                request.open(method, url, async);
-                request.send();
-            }
-        </script>
     </body>
 </html>

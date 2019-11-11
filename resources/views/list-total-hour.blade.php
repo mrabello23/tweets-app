@@ -32,15 +32,15 @@
 
 @section('js')
     <script>
-        sendRequest('GET', '/api/v1/total/hour', true);
+        sendRequest('GET', '/api/v1/total/hour', createTableBody);
 
         function createTableBody(json){
             let html = "";
 
             for (const item in json.data) {
                 html += "<tr>";
-                    html += "<td>" + item.hora_tweet + "</td>";
-                    html += "<td>" + item.total_posts + "</td>";
+                    html += "<td>" + json.data[item].hora_tweet + "</td>";
+                    html += "<td>" + json.data[item].total_posts + "</td>";
                 html += "</tr>";
             }
 

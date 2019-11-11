@@ -1,0 +1,431 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a API's Documentation server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).",
+        "version": "1.0.0",
+        "title": "Swagger Tweets App",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "email": "apiteam@swagger.io"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    },
+    "host": "localhost:8081/api",
+    "basePath": "/v1",
+    "tags": [{
+        "name": "Tweets",
+        "description": "Here you'll find: Find tweets by Hashtag; List all tweets; Top 5 users by followers; Total posts by day hour; Total posts by hastag, lang and local",
+        "externalDocs": {
+            "description": "Find out more",
+            "url": "http://swagger.io"
+        }
+    }],
+    "schemes": [
+        "http"
+    ],
+    "paths": {
+        "/tweets": {
+            "get": {
+                "tags": [
+                    "Tweets"
+                ],
+                "summary": "Find all tweets",
+                "description": "Returns all tweets",
+                "operationId": "getAllTweetsId",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "integer",
+                                    "format": "int64"
+                                },
+                                "tweet": {
+                                    "type": "string"
+                                },
+                                "tweet_data": {
+                                    "type": "string",
+                                    "format": "date-time"
+                                },
+                                "hashtag": {
+                                    "type": "string"
+                                },
+                                "seguidores": {
+                                    "type": "integer",
+                                    "format": "int64"
+                                },
+                                "localidade": {
+                                    "type": "string"
+                                },
+                                "lingua": {
+                                    "type": "string"
+                                },
+                                "usuario_nome": {
+                                    "type": "string"
+                                },
+                                "usuario_apelido": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "string",
+                                    "format": "date-time"
+                                },
+                                "updated_at": {
+                                    "type": "string",
+                                    "format": "date-time"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "security": [{
+                    "api_key": []
+                }]
+            }
+        },
+        "/tweets/hashtag/{hashtag}": {
+            "get": {
+                "tags": [
+                    "Tweets"
+                ],
+                "summary": "Finds tweets by hashtag",
+                "description": "Return all tweets with given hashtag",
+                "operationId": "findTweetsByHashtagId",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [{
+                    "name": "hashtag",
+                    "in": "path",
+                    "description": "Hashtag to find",
+                    "required": true,
+                    "type": "string",
+                    "format": "string"
+                }],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "integer",
+                                    "format": "int64"
+                                },
+                                "tweet": {
+                                    "type": "string"
+                                },
+                                "tweet_data": {
+                                    "type": "string",
+                                    "format": "date-time"
+                                },
+                                "hashtag": {
+                                    "type": "string"
+                                },
+                                "seguidores": {
+                                    "type": "integer",
+                                    "format": "int64"
+                                },
+                                "localidade": {
+                                    "type": "string"
+                                },
+                                "lingua": {
+                                    "type": "string"
+                                },
+                                "usuario_nome": {
+                                    "type": "string"
+                                },
+                                "usuario_apelido": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "string",
+                                    "format": "date-time"
+                                },
+                                "updated_at": {
+                                    "type": "string",
+                                    "format": "date-time"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid hashtag"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "security": [{
+                    "api_key": []
+                }]
+            }
+        },
+        "/total/hour": {
+            "get": {
+                "tags": [
+                    "Tweets"
+                ],
+                "summary": "Find total of posts by hour",
+                "description": "Returns total of posts from hashtags: '#openbanking, #apifirst, #devops, #cloudfirst, #microservices, #apigateway, #oauth, #swagger, #raml, #openapis' grouped by hour",
+                "operationId": "getTotalPostsByHourId",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "request_time_start": {
+                                    "type": "number",
+                                    "format": "float"
+                                },
+                                "request_time_end": {
+                                    "type": "number",
+                                    "format": "float"
+                                },
+                                "api_response_time": {
+                                    "type": "string"
+                                },
+                                "total": {
+                                    "type": "integer",
+                                    "format": "int64"
+                                },
+                                "data": [{
+                                    "hora_tweet": {
+                                        "type": "integer",
+                                        "format": "int64"
+                                    },
+                                    "total_posts": {
+                                        "type": "integer",
+                                        "format": "int64"
+                                    }
+                                }]
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "security": [{
+                    "api_key": []
+                }]
+            }
+        },
+        "/total/hashtag/lang/local": {
+            "get": {
+                "tags": [
+                    "Tweets"
+                ],
+                "summary": "Find total of posts by hashtag, lang and local",
+                "description": "Returns total of posts from hashtags: '#openbanking, #apifirst, #devops, #cloudfirst, #microservices, #apigateway, #oauth, #swagger, #raml, #openapis' grouped by hashtag, lang and local",
+                "operationId": "getTotalPostsByHashtagLangLocalId",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "request_time_start": {
+                                    "type": "number",
+                                    "format": "float"
+                                },
+                                "request_time_end": {
+                                    "type": "number",
+                                    "format": "float"
+                                },
+                                "api_response_time": {
+                                    "type": "string"
+                                },
+                                "total": {
+                                    "type": "integer",
+                                    "format": "int64"
+                                },
+                                "data": [{
+                                    "hashtag": {
+                                        "type": "string"
+                                    },
+                                    "lingua": {
+                                        "type": "string"
+                                    },
+                                    "localidade": {
+                                        "type": "string"
+                                    },
+                                    "total_posts": {
+                                        "type": "integer",
+                                        "format": "int64"
+                                    }
+                                }]
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "security": [{
+                    "api_key": []
+                }]
+            }
+        },
+        "/top/users": {
+            "get": {
+                "tags": [
+                    "Tweets"
+                ],
+                "summary": "Find top 5 users by followers",
+                "description": "Returns top users from hashtags: '#openbanking, #apifirst, #devops, #cloudfirst, #microservices, #apigateway, #oauth, #swagger, #raml, #openapis' grouped by followers",
+                "operationId": "getTop5UsersByFollowersId",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "request_time_start": {
+                                    "type": "number",
+                                    "format": "float"
+                                },
+                                "request_time_end": {
+                                    "type": "number",
+                                    "format": "float"
+                                },
+                                "api_response_time": {
+                                    "type": "string"
+                                },
+                                "total": {
+                                    "type": "integer",
+                                    "format": "int64"
+                                },
+                                "data": [{
+                                    "usuario_nome": {
+                                        "type": "string"
+                                    },
+                                    "usuario_apelido": {
+                                        "type": "string"
+                                    },
+                                    "seguidores": {
+                                        "type": "integer",
+                                        "format": "int64"
+                                    },
+                                    "lingua": {
+                                        "type": "string"
+                                    },
+                                    "localidade": {
+                                        "type": "string"
+                                    }
+                                }]
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "security": [{
+                    "api_key": []
+                }]
+            }
+        }
+    },
+    "securityDefinitions": {
+        "api_key": {
+            "type": "apiKey",
+            "name": "api_key",
+            "in": "header"
+        }
+    },
+    "definitions": {
+        "Tweet": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "tweet": {
+                    "type": "string"
+                },
+                "tweet_data": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "hashtag": {
+                    "type": "string"
+                },
+                "seguidores": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "localidade": {
+                    "type": "string"
+                },
+                "lingua": {
+                    "type": "string"
+                },
+                "usuario_nome": {
+                    "type": "string"
+                },
+                "usuario_apelido": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "updated_at": {
+                    "type": "string",
+                    "format": "date-time"
+                }
+            }
+        }
+    },
+    "externalDocs": {
+        "description": "Find out more about Swagger",
+        "url": "http://swagger.io"
+    }
+}
