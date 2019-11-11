@@ -46,3 +46,7 @@ services:
     build: docker/swagger
     ports:
       - 8082:8080 
+    links:
+      - web
+    depends_on:
+      - web
