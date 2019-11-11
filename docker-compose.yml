@@ -24,6 +24,7 @@ services:
       php artisan key:generate && 
       php artisan migrate && 
       service apache2 restart && 
+      echo 'InitLog' > /var/www/html/storage/logs/app.log && 
       tail -f /var/www/html/storage/logs/app.log"
     links:
       - db
