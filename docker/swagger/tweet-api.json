@@ -13,7 +13,7 @@
             "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
         }
     },
-    "host": "localhost:8081/api",
+    "host": "webapp/api",
     "basePath": "/v1",
     "tags": [{
         "name": "Tweets",
@@ -38,58 +38,60 @@
                 "produces": [
                     "application/json"
                 ],
+                "parameters": [],
                 "responses": {
                     "200": {
                         "description": "successful operation",
                         "schema": {
                             "type": "object",
                             "properties": {
-                                "id": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "request_time_start": {
+                                    "type": "number",
+                                    "format": "float"
+                                },
+                                "request_time_end": {
+                                    "type": "number",
+                                    "format": "float"
+                                },
+                                "api_response_time": {
+                                    "type": "string"
+                                },
+                                "total": {
                                     "type": "integer",
                                     "format": "int64"
                                 },
-                                "tweet": {
-                                    "type": "string"
-                                },
-                                "tweet_data": {
-                                    "type": "string",
-                                    "format": "date-time"
-                                },
-                                "hashtag": {
-                                    "type": "string"
-                                },
-                                "seguidores": {
-                                    "type": "integer",
-                                    "format": "int64"
-                                },
-                                "localidade": {
-                                    "type": "string"
-                                },
-                                "lingua": {
-                                    "type": "string"
-                                },
-                                "usuario_nome": {
-                                    "type": "string"
-                                },
-                                "usuario_apelido": {
-                                    "type": "string"
-                                },
-                                "created_at": {
-                                    "type": "string",
-                                    "format": "date-time"
-                                },
-                                "updated_at": {
-                                    "type": "string",
-                                    "format": "date-time"
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/Tweet"
+                                    }
                                 }
+                            }
+                        },
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
                             }
                         }
                     },
                     "500": {
-                        "description": "Internal server error"
+                        "description": "Internal server error",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            }
+                        }
                     },
                     "404": {
-                        "description": "Resource not found"
+                        "description": "Resource not found",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            }
+                        }
                     }
                 },
                 "security": [{
@@ -113,8 +115,7 @@
                     "in": "path",
                     "description": "Hashtag to find",
                     "required": true,
-                    "type": "string",
-                    "format": "string"
+                    "type": "string"
                 }],
                 "responses": {
                     "200": {
@@ -122,55 +123,61 @@
                         "schema": {
                             "type": "object",
                             "properties": {
-                                "id": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "request_time_start": {
+                                    "type": "number",
+                                    "format": "float"
+                                },
+                                "request_time_end": {
+                                    "type": "number",
+                                    "format": "float"
+                                },
+                                "api_response_time": {
+                                    "type": "string"
+                                },
+                                "total": {
                                     "type": "integer",
                                     "format": "int64"
                                 },
-                                "tweet": {
-                                    "type": "string"
-                                },
-                                "tweet_data": {
-                                    "type": "string",
-                                    "format": "date-time"
-                                },
-                                "hashtag": {
-                                    "type": "string"
-                                },
-                                "seguidores": {
-                                    "type": "integer",
-                                    "format": "int64"
-                                },
-                                "localidade": {
-                                    "type": "string"
-                                },
-                                "lingua": {
-                                    "type": "string"
-                                },
-                                "usuario_nome": {
-                                    "type": "string"
-                                },
-                                "usuario_apelido": {
-                                    "type": "string"
-                                },
-                                "created_at": {
-                                    "type": "string",
-                                    "format": "date-time"
-                                },
-                                "updated_at": {
-                                    "type": "string",
-                                    "format": "date-time"
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/Tweet"
+                                    }
                                 }
+                            }
+                        },
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
                             }
                         }
                     },
                     "400": {
-                        "description": "Invalid hashtag"
+                        "description": "Invalid hashtag",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            }
+                        }
                     },
                     "500": {
-                        "description": "Internal server error"
+                        "description": "Internal server error",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            }
+                        }
                     },
                     "404": {
-                        "description": "Resource not found"
+                        "description": "Resource not found",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            }
+                        }
                     }
                 },
                 "security": [{
@@ -189,6 +196,7 @@
                 "produces": [
                     "application/json"
                 ],
+                "parameters": [],
                 "responses": {
                     "200": {
                         "description": "successful operation",
@@ -213,24 +221,45 @@
                                     "type": "integer",
                                     "format": "int64"
                                 },
-                                "data": [{
-                                    "hora_tweet": {
-                                        "type": "integer",
-                                        "format": "int64"
-                                    },
-                                    "total_posts": {
-                                        "type": "integer",
-                                        "format": "int64"
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "hora_tweet": {
+                                                "type": "integer",
+                                                "format": "int64"
+                                            },
+                                            "total_posts": {
+                                                "type": "integer",
+                                                "format": "int64"
+                                            }
+                                        }
                                     }
-                                }]
+                                }
+                            }
+                        },
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
                             }
                         }
                     },
                     "500": {
-                        "description": "Internal server error"
+                        "description": "Internal server error",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            }
+                        }
                     },
                     "404": {
-                        "description": "Resource not found"
+                        "description": "Resource not found",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            }
+                        }
                     }
                 },
                 "security": [{
@@ -249,6 +278,7 @@
                 "produces": [
                     "application/json"
                 ],
+                "parameters": [],
                 "responses": {
                     "200": {
                         "description": "successful operation",
@@ -273,29 +303,50 @@
                                     "type": "integer",
                                     "format": "int64"
                                 },
-                                "data": [{
-                                    "hashtag": {
-                                        "type": "string"
-                                    },
-                                    "lingua": {
-                                        "type": "string"
-                                    },
-                                    "localidade": {
-                                        "type": "string"
-                                    },
-                                    "total_posts": {
-                                        "type": "integer",
-                                        "format": "int64"
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "hashtag": {
+                                                "type": "string"
+                                            },
+                                            "lingua": {
+                                                "type": "string"
+                                            },
+                                            "localidade": {
+                                                "type": "string"
+                                            },
+                                            "total_posts": {
+                                                "type": "integer",
+                                                "format": "int64"
+                                            }
+                                        }
                                     }
-                                }]
+                                }
+                            }
+                        },
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
                             }
                         }
                     },
                     "500": {
-                        "description": "Internal server error"
+                        "description": "Internal server error",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            }
+                        }
                     },
                     "404": {
-                        "description": "Resource not found"
+                        "description": "Resource not found",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            }
+                        }
                     }
                 },
                 "security": [{
@@ -314,6 +365,7 @@
                 "produces": [
                     "application/json"
                 ],
+                "parameters": [],
                 "responses": {
                     "200": {
                         "description": "successful operation",
@@ -338,32 +390,53 @@
                                     "type": "integer",
                                     "format": "int64"
                                 },
-                                "data": [{
-                                    "usuario_nome": {
-                                        "type": "string"
-                                    },
-                                    "usuario_apelido": {
-                                        "type": "string"
-                                    },
-                                    "seguidores": {
-                                        "type": "integer",
-                                        "format": "int64"
-                                    },
-                                    "lingua": {
-                                        "type": "string"
-                                    },
-                                    "localidade": {
-                                        "type": "string"
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "usuario_nome": {
+                                                "type": "string"
+                                            },
+                                            "usuario_apelido": {
+                                                "type": "string"
+                                            },
+                                            "seguidores": {
+                                                "type": "integer",
+                                                "format": "int64"
+                                            },
+                                            "lingua": {
+                                                "type": "string"
+                                            },
+                                            "localidade": {
+                                                "type": "string"
+                                            }
+                                        }
                                     }
-                                }]
+                                }
+                            }
+                        },
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
                             }
                         }
                     },
                     "500": {
-                        "description": "Internal server error"
+                        "description": "Internal server error",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            }
+                        }
                     },
                     "404": {
-                        "description": "Resource not found"
+                        "description": "Resource not found",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            }
+                        }
                     }
                 },
                 "security": [{
