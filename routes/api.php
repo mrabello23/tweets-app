@@ -1,4 +1,7 @@
 <?php
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST, DELETE, PUT, PATCH, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type, api_key, Authorization');
 
 use Illuminate\Http\Request;
 

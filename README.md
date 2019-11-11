@@ -15,6 +15,10 @@
 - Run "docker-compose up"
 
 
+## Run Unit and Feature Tests
+- docker exec -it webapp /var/www/html/vendor/bin/phpunit /var/www/html/tests
+
+
 ## Application and API
 App Url:
 - http://localhost:8081/
@@ -35,12 +39,6 @@ Custom Dashboard:
 Container Dashboard:
 - https://p.datadoghq.com/sb/pymarljnjizo00ix-d3ab1d40a62578fba270d81147e7719a
 
-Apache WebServer Dashboard:
-- https://p.datadoghq.com/sb/pymarljnjizo00ix-7c05e17a62902ead0700c15d8f4e16d7
-
-
-## Run Unit and Feature Tests
-- docker exec -it webapp /var/www/html/vendor/bin/phpunit /var/www/html/tests
 
 ## Laravel Sponsors
 
