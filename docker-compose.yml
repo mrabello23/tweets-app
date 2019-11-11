@@ -2,10 +2,9 @@ version: '3'
 services:
   db:
     container_name: webmysql
-    restart: always
     image: mysql:5.7
     ports:
-      - "3306:3306"
+      - 3306:3306
     command: --default-authentication-plugin=mysql_native_password
     environment:
       TZ: "America/Sao_Paulo"
@@ -13,51 +12,37 @@ services:
       MYSQL_DATABASE: "testdb"
   web:
     container_name: webapp
-    restart: always
-    build:
-      context: .
-      dockerfile: docker/php-apache/Dockerfile
+    build: docker/php-apache
     volumes:
       - ./:/var/www/html
     ports:
-      - "8081:80"
+      - 8081:80
     dns: 8.8.8.8
-    command: bash -c "chmod -R 777 /var/www/html && 
-      cd /var/www/html && 
+    command: bash -c "cd /var/www/html && 
       cp .env.example .env && 
       composer install && 
       php artisan key:generate && 
       php artisan migrate && 
       service apache2 restart && 
-      tail -f /dev/null"
+      tail -f /var/www/html/storage/logs/app.log"
     links:
       - db
     depends_on:
       - db
-    environment:
-      - DATADOG_HOST=datadog
   datadog:
     container_name: datadog-agent
-    restart: always
-    build:
-      context: .
-      dockerfile: docker/datadog/Dockerfile
-    environment:
-      - DD_API_KEY=ca0debc37c552558e2dbf5d4b0fce92f
-      - DD_PROCESS_AGENT_ENABLED=true
-      - DD_TRACE_DEBUG=true
-      - DD_LOGS_ENABLED=true
-      - DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL=true
-      - DD_AC_EXCLUDE="name:datadog-agent"
+    build: docker/datadog
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /proc/:/host/proc/:ro
       - /sys/fs/cgroup:/host/sys/fs/cgroup:ro
       - /etc/passwd:/etc/passwd:ro
-      - ./storage/logs:/logs:ro
-    labels:
-      com.datadoghq.ad.logs: '[{"source": "php", "service": "webapp", "type": "file", "path": "/logs/*.log"}]'
     links:
       - web
     depends_on:
       - web
+  swagger:
+    container_name: swagger
+    build: docker/swagger
+    ports:
+      - 8082:8080 
