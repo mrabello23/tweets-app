@@ -13,7 +13,7 @@
             "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
         }
     },
-    "host": "webapp/api",
+    "host": "localhost:8081/api",
     "basePath": "/v1",
     "tags": [{
         "name": "Tweets",
