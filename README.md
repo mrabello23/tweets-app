@@ -37,9 +37,10 @@ API Base Url:
 Swagger: 
 - http://localhost:8082/
 
-## System Architecture Docs:
 
-- https://github.com/mrabello23/tweets-app/blob/master/docs/system_architecture.pdf
+## Documentation and Prints
+
+- https://github.com/mrabello23/tweets-app/blob/master/docs
 
 
 ## System and Container Dashboards Metrics
